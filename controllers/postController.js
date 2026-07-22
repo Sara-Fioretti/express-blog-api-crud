@@ -27,18 +27,41 @@ function store(req, res) {
         const newPost = {
                 title: req.body.title,
                 content: req.body.content,
-                image: req.body.image ,
+                image: req.body.image,
                 tags: req.body.tags
         }
-        
+
         posts.push(newPost);
-        
+
         console.log(newPost);
 
-        res.sendStatus(201)
+        res.status(201)
         res.json(newPost);
 }
 
+//UPDATE
+function update(req, res) {
+        const postId = req.params.id
+        const postDaModificare = posts.find(post => post.id == postId)
+        //controlliamo se l'id è valido
+        if (!postDaModificare) {
+                res.status(404);
+                return res.json({
+                        error: "Not Found",
+                        message: "Post non trovato"
+                })
+        }
+        //Se l'id è valido procediamo con la modifica
+        postDaModificare.title = req.body.tile;
+        postDaModificare.content = req.body.content;
+        postDaModificare.image = req.body.image;
+        postDaModificare.tags = req.body.tags;
+
+        console.log(posts)
+        res.json(posts)
+};
+
+//-----------------------------------------------------------------------------------------------//
 //BONUS INDEX:implementare un filtro di ricerca nella index che mostri solo i post che hanno un determinato Tag
 function index(req, res) {
         const tag = req.query.tag;
@@ -87,4 +110,4 @@ function destroy(req, res) {
 };
 
 
-module.exports = { index, show, destroy, store}
+module.exports = { index, show, destroy, store, update }
