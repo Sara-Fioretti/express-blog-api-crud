@@ -11,4 +11,7 @@ router.get('/:id', postController.show);
 //DESTROY//
 router.delete('/:id', postController.destroy);
 
+//STORE//
+router.post ('/', postController.store);
+
 module.exports = router;

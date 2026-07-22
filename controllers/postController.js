@@ -22,6 +22,23 @@ function destroy(req, res) {
         res.sendStatus(204)
 };
 
+// STORE
+function store(req, res) {
+        const newPost = {
+                title: req.body.title,
+                content: req.body.content,
+                image: req.body.image ,
+                tags: req.body.tags
+        }
+        
+        posts.push(newPost);
+        
+        console.log(newPost);
+
+        res.sendStatus(201)
+        res.json(newPost);
+}
+
 //BONUS INDEX:implementare un filtro di ricerca nella index che mostri solo i post che hanno un determinato Tag
 function index(req, res) {
         const tag = req.query.tag;
@@ -30,7 +47,7 @@ function index(req, res) {
                         return post.tags.includes(tag)
                 })
                 res.json(filteredPost)
-        }else{
+        } else {
                 res.json(posts)
         }
 
@@ -70,4 +87,4 @@ function destroy(req, res) {
 };
 
 
-module.exports = { index, show, destroy }
+module.exports = { index, show, destroy, store}
